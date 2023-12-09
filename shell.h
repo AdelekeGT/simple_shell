@@ -82,6 +82,7 @@ void do_split(char *delim_args[], char *input);
 char *do_accept_input(void);
 int check_for_env(char *command, char **argv, char **env);
 int do_prompt_exec(char *input, Shell_pack *sh_data);
+void do_print_prompt_exec_error(char *input);
 void do_fork_exec(char *input, char **exec_args, Shell_pack *sh_data);
 void do_free_allocs(Shell_pack *sh_data);
 int do_set_data(Shell_pack *sh_data, char **argv);

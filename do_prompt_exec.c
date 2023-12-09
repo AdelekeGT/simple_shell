@@ -19,6 +19,18 @@ void do_split(char *delim_args[], char *input)
 		delim_args[++i] = makeshift_strtok(NULL, OGA_DELIMITERS);
 
 }
+
+/**
+ * do_print_prompt_exec_error - print error
+ * @input: input from command line
+*/
+void do_print_prompt_exec_error(char *input)
+{
+	makeshift_printf(": 1: ");
+	makeshift_printf(input);
+	makeshift_printf(": not found\n");
+}
+
 /**
  * do_prompt_exec - executes command typed in prompt
  * @input: input received from user
@@ -61,7 +73,7 @@ int do_prompt_exec(char *input, Shell_pack *sh_data)
 		if (path_validation != 0 && command_exists != 0)
 		{
 			makeshift_printf(sh_data->sh_argv[0]);
-			makeshift_printf(": No such file or directory\n");
+			do_print_prompt_exec_error(input);
 		}
 		j++;
 	}
