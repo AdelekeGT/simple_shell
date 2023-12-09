@@ -17,7 +17,7 @@
 
 #define THE_BUFFER_SIZE 1024
 #define TOKEN_SPACE 128
-#define OGA_DELIMITERS " \t\r\n\a:"
+#define OGA_DELIMITERS "\t\r\n\a"
 
 /* environment accessed from global variable environ */
 extern char **environ;
@@ -77,6 +77,7 @@ int validate_command(const char *command);
 char *fuse_commands(const char *command);
 int validate_path(char *path_n_cmd);
 char **do_tokenize_PATH(void);
+void do_split(char *delim_args[], char *input);
 
 char *do_accept_input(void);
 int check_for_env(char *command, char **argv, char **env);
