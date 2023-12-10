@@ -23,7 +23,7 @@ int validate_command(const char *command)
 
 	while (tok_paths[j] != NULL)
 	{
-		folder_ptr = opendir(tok_paths[j++]);
+		folder_ptr = opendir(tok_paths[j]);
 		if (folder_ptr == NULL)
 		{
 			free(tok_paths);
@@ -33,7 +33,8 @@ int validate_command(const char *command)
 		dir_entry = readdir(folder_ptr);
 		while (dir_entry != NULL)
 		{
-			if (makeshift_strncmp(dir_entry->d_name, command, sizeof(command)) == 0)
+			if (makeshift_strncmp(dir_entry->d_name, command,
+			makeshift_strlen(command)) == 0)
 			{
 				closedir(folder_ptr);
 				free(tok_paths);

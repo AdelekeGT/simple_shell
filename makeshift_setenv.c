@@ -69,8 +69,8 @@ int makeshift_setenv(Shell_pack *sh_data)
 
 	if (sh_data->sh_arguments[1] == NULL || sh_data->sh_arguments[2] == NULL)
 	{
-		/*get_error(sh_data, -1);*/
-		return (-1);
+		do_handle_errors(sh_data, -1);
+		return (0);
 	}
 
 	len = makeshift_strlen(sh_data->sh_arguments[1]);

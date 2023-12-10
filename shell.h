@@ -75,14 +75,14 @@ void do_get_sigint(int integer);
 
 int validate_command(const char *command);
 char *fuse_commands(const char *command);
+void copy_commands(char *full_command, const char *command, char *found_path);
 int validate_path(char *path_n_cmd);
 char **do_tokenize_PATH(void);
-void do_split(char *delim_args[], char *input);
+int do_split(char *delim_args[], char *input);
 
 char *do_accept_input(void);
 int check_for_env(char *command, char **argv, char **env);
 int do_prompt_exec(char *input, Shell_pack *sh_data);
-void do_print_prompt_exec_error(char *input);
 void do_fork_exec(char *input, char **exec_args, Shell_pack *sh_data);
 void do_free_allocs(Shell_pack *sh_data);
 int do_set_data(Shell_pack *sh_data, char **argv);
@@ -106,9 +106,13 @@ int check_for_builtins(Shell_pack *sh_data);
 /* the builtins*/
 int exit_builtin(Shell_pack *sh_data);
 int env_builtin(Shell_pack *sh_data);
-int setenv_builtin(Shell_pack *sh_data);
-int unsetenv_builtin(Shell_pack *sh_data);
 int cd_builtin(Shell_pack *sh_data);
 int echo_builtin(Shell_pack *sh_data);
+
+/* Error functions*/
+int do_handle_errors(Shell_pack *sh_data, int return_val);
+void err_for_environ(Shell_pack *sh_data);
+void err_for_not_found(Shell_pack *sh_data);
+void err_for_exit(Shell_pack *sh_data);
 
 #endif /* SHELL_H */

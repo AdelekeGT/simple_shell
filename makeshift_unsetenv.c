@@ -14,7 +14,10 @@ int makeshift_unsetenv(Shell_pack *sh_data)
 	int p, q, r = -1, length;
 
 	if (sh_data->sh_arguments[1] == NULL)
-		return (-1);
+	{
+		do_handle_errors(sh_data, -1);
+		return (0);
+	}
 
 	length = makeshift_strlen(sh_data->sh_arguments[1]);
 
@@ -28,7 +31,10 @@ int makeshift_unsetenv(Shell_pack *sh_data)
 	}
 
 	if (r == -1)
-		return (-1);
+	{
+		do_handle_errors(sh_data, -1);
+		return (0);
+	}
 
 	create_new_environ = malloc(sizeof(char *) * (p));
 	for (p = q = 0; sh_data->sh_environ[p]; p++)

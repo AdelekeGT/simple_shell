@@ -11,9 +11,11 @@ int check_for_builtins(Shell_pack *sh_data)
 {
 	int iterator, length, _value;
 	Builtin_execs builtin_array[] = {
-		{"exit", exit_builtin}, {"setenv", setenv_builtin},
-		{"unsetenv", unsetenv_builtin},
-		{"env", env_builtin}, {NULL, NULL}
+		{"exit", exit_builtin},
+		{"setenv", makeshift_setenv},
+		{"unsetenv", makeshift_unsetenv},
+		{"env", env_builtin},
+		{NULL, NULL}
 	};
 
 	if (sh_data->sh_arguments[0] == NULL)

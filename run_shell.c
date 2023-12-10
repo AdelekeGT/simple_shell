@@ -29,12 +29,10 @@ void run_shell(Shell_pack *sh_data)
 		/* here also lies checking if input is builtin command*/
 		prompt_return_value = do_prompt_exec(the_input, sh_data);
 		if (prompt_return_value == 1)
-		{
-			free(the_input);
 			break;
-		}
 
 		if (prompt_return_value == 0)
 			sh_data->sh_status = 0;
 	}
+
 }

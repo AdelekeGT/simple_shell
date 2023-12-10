@@ -4,13 +4,15 @@
  * do_split - tokenize input if certain delimiters exist
  * @delim_args: pointer to input that will be split
  * @input: input from shell
+ *
+ * Return: 0 on success
 */
-void do_split(char *delim_args[], char *input)
+int do_split(char *delim_args[], char *input)
 {
 	int i;
 
 	if (input == NULL)
-		return;
+		return (-2);
 
 	i = 0;
 
@@ -18,17 +20,7 @@ void do_split(char *delim_args[], char *input)
 	while (delim_args[i] != NULL)
 		delim_args[++i] = makeshift_strtok(NULL, OGA_DELIMITERS);
 
-}
-
-/**
- * do_print_prompt_exec_error - print error
- * @input: input from command line
-*/
-void do_print_prompt_exec_error(char *input)
-{
-	makeshift_printf(": 1: ");
-	makeshift_printf(input);
-	makeshift_printf(": not found\n");
+	return (0);
 }
 
 /**
@@ -40,25 +32,28 @@ void do_print_prompt_exec_error(char *input)
 */
 int do_prompt_exec(char *input, Shell_pack *sh_data)
 {
-	char *exec_args[30], *delim_args[10], *full_command;
+	char *exec_args[30] = {NULL}, *delim_args[10] = {NULL}, *full_command;
 	const char *the_delims = " ";
-	int i = 0, j = 0, k = 0, command_exists, builtin_return_val, path_validation;
+	int i, j, k = 0, command_exists, builtin_return_val, path_validation;
 
-	do_split(delim_args, input);
-	while (delim_args[j] != NULL)
+	if (do_split(delim_args, input) != 0)
+		return (-2);
+	for (j = 0; delim_args[j] != NULL; j++)
 	{
+		k = 0;
 		exec_args[k] = makeshift_strtok(delim_args[j], the_delims);
 		while (exec_args[k] != NULL)
 			exec_args[++k] = makeshift_strtok(NULL, the_delims);
-		while (exec_args[i] != NULL)
-		{
+		for (i = 0; exec_args[i] != NULL; i++)
 			sh_data->sh_arguments[i] = makeshift_strdup(exec_args[i]);
-			i++;
-		}
 		sh_data->sh_arguments[i] = NULL;
 		builtin_return_val = check_for_builtins(sh_data);
 		if (builtin_return_val == 1 || builtin_return_val == 0)
+		{
+			free(input);
+			free(full_command);
 			return (builtin_return_val);
+		}
 
 		/*If a direct command e.g ls, is passed, validate it*/
 		command_exists = validate_command(exec_args[0]);
@@ -70,12 +65,9 @@ int do_prompt_exec(char *input, Shell_pack *sh_data)
 		path_validation = validate_path(exec_args[0]);
 		if (path_validation == 0)
 			do_fork_exec(input, exec_args, sh_data);
+
 		if (path_validation != 0 && command_exists != 0)
-		{
-			makeshift_printf(sh_data->sh_argv[0]);
-			do_print_prompt_exec_error(input);
-		}
-		j++;
+			do_handle_errors(sh_data, 127);
 	}
 	free(input);
 	free(full_command);

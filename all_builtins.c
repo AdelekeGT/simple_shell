@@ -19,46 +19,13 @@ int exit_builtin(Shell_pack *sh_data)
 
 		if (!stat_is_digit || _length >= 11 || number)
 		{
-			sh_data->sh_status = 2;
+			sh_data->sh_status = 5;
+			do_handle_errors(sh_data, 5);
 			return (-1);
 		}
-		sh_data->sh_status = sh_stat;
+		sh_data->sh_status = sh_stat % 256;
 	}
 	return (1);
-}
-
-/**
- * setenv_builtin - function for executing setenv
- * @sh_data: data from shell
- *
- * Return: 0 on success
-*/
-int setenv_builtin(Shell_pack *sh_data)
-{
-	if (makeshift_setenv(sh_data) != 0)
-	{
-		perror("setenv failure");
-		return (-1);
-	}
-
-	return (0);
-}
-
-/**
- * unsetenv_builtin - function for executing setenv
- * @sh_data: data from shell
- *
- * Return: 0 on success
-*/
-int unsetenv_builtin(Shell_pack *sh_data)
-{
-	if (makeshift_unsetenv(sh_data) != 0)
-	{
-		perror("unsetenv failure");
-		return (-1);
-	}
-
-	return (0);
 }
 
 /**
@@ -81,6 +48,8 @@ int env_builtin(Shell_pack *sh_data)
 		makeshift_printf("\n");
 		idx++;
 	}
+
+	sh_data->sh_status = 0;
 
 	return (0);
 }
