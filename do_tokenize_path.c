@@ -32,7 +32,7 @@ char **do_tokenize_PATH(void)
 		}
 		i++;
 	}
-	tok_paths[k] = makeshift_strdup(makeshift_strtok(path_env, delim));
+	tok_paths[k] = makeshift_strdup(strtok(path_env, delim));
 	if (tok_paths[k] == NULL)
 	{
 		free(path_env);
@@ -41,7 +41,7 @@ char **do_tokenize_PATH(void)
 	}
 	while (tok_paths[k] != NULL && i < 217)
 	{
-		tok_paths[++k] = makeshift_strdup(makeshift_strtok(NULL, delim));
+		tok_paths[++k] = makeshift_strdup(strtok(NULL, delim));
 		if (tok_paths[k] == NULL)
 			break;
 	}

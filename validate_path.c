@@ -9,9 +9,8 @@
 int validate_path(char *path_n_cmd)
 {
 	char *path = "/bin/";
-	char *cmd_left;
+	char *cmd_left, *command_is_valid;
 	int _ind = 0, _i = 0;
-	int command_is_valid;
 
 	cmd_left = malloc(30 * sizeof(char));
 	if (cmd_left == NULL)
@@ -37,7 +36,7 @@ int validate_path(char *path_n_cmd)
 
 	/*Now check if command left is valid*/
 	command_is_valid = validate_command(cmd_left);
-	if (command_is_valid != 0)
+	if (command_is_valid == NULL)
 	{
 		free(cmd_left);
 		return (-1);

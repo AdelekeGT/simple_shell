@@ -18,9 +18,7 @@ int makeshift_unsetenv(Shell_pack *sh_data)
 		do_handle_errors(sh_data, -1);
 		return (0);
 	}
-
 	length = makeshift_strlen(sh_data->sh_arguments[1]);
-
 	for (p = 0; sh_data->sh_environ[p]; p++)
 	{
 		full_env_var = makeshift_strdup(sh_data->sh_environ[p]);
@@ -46,7 +44,6 @@ int makeshift_unsetenv(Shell_pack *sh_data)
 		}
 	}
 	create_new_environ[q] = NULL;
-
 	free(sh_data->sh_environ[r]);
 	free(sh_data->sh_environ);
 	sh_data->sh_environ = create_new_environ;

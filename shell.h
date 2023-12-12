@@ -17,7 +17,7 @@
 
 #define THE_BUFFER_SIZE 1024
 #define TOKEN_SPACE 128
-#define OGA_DELIMITERS "\t\r\n\a"
+#define OGA_DELIMS " \t\r\n\a"
 
 /* environment accessed from global variable environ */
 extern char **environ;
@@ -70,20 +70,23 @@ int makeshift_atoi(char *string);
 char *makeshift_itoa(int integer);
 int makeshift_cmpchr(char *the_str, const char *the_delim);
 char *makeshift_strtok(char *the_str, const char *the_delim);
+void *makeshift_memcpy(void *destination, const void *source, unsigned int n);
+void *makeshift_realloc(void *block, size_t size);
 int makeshift_isdigit(const char *the_char);
 void do_get_sigint(int integer);
 
-int validate_command(const char *command);
-char *fuse_commands(const char *command);
+char *validate_command(const char *command);
 void copy_commands(char *full_command, const char *command, char *found_path);
 int validate_path(char *path_n_cmd);
 char **do_tokenize_PATH(void);
-int do_split(char *delim_args[], char *input);
 
-char *do_accept_input(void);
+char *do_accept_input(ssize_t *get_ret);
 int check_for_env(char *command, char **argv, char **env);
+char *do_comments_check(char *the_input);
 int do_prompt_exec(char *input, Shell_pack *sh_data);
+void copy_to_fullCMD(char *full_cmd, char *path, char *command);
 void do_fork_exec(char *input, char **exec_args, Shell_pack *sh_data);
+void free_prompt_exec(char *is_cmd, char *input, char *full_cmd);
 void do_free_allocs(Shell_pack *sh_data);
 int do_set_data(Shell_pack *sh_data, char **argv);
 
@@ -91,6 +94,14 @@ int do_set_data(Shell_pack *sh_data, char **argv);
 int allocate_buffer(char **buffer, size_t size);
 ssize_t makeshift_getline(char **user_input, size_t *num, FILE *file_desc);
 char *another_getline();
+
+/* functions used in checking syntax errors at input */
+int char_over_and_over(char *the_input, int _c);
+int check_some_chars(char *the_input, int _ind, char end_char);
+int check_1st_char(char *the_input, int *_ind);
+void err_for_wrong_input_char(Shell_pack *sh_data, char *the_input,
+int val, int _ind);
+int check_for_wrong_input_char(Shell_pack *sh_data, char *the_input);
 
 /* the environment family*/
 int makeshift_unsetenv(Shell_pack *sh_data);

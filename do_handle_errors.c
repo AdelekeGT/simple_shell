@@ -100,6 +100,7 @@ void err_for_not_found(Shell_pack *sh_data)
 		write(STDERR_FILENO, full_error_msg, _len);
 		free(full_error_msg);
 	}
+	sh_data->sh_status = 127;
 }
 
 /**
@@ -112,11 +113,11 @@ void err_for_exit(Shell_pack *sh_data)
 	char *full_error_msg, *count_str, *e_msg;
 
 	count_str = makeshift_itoa(sh_data->sh_count);
-	e_msg = ": Number not allowed: ";
+	e_msg = ": Illegal number: ";
 
 	_len = makeshift_strlen(sh_data->sh_argv[0]) + makeshift_strlen(count_str) +
 	makeshift_strlen(sh_data->sh_arguments[0]) + makeshift_strlen(e_msg) +
-	makeshift_strlen(sh_data->sh_arguments[1]) + 4;
+	makeshift_strlen(sh_data->sh_arguments[1]) + 5;
 
 	full_error_msg = malloc(sizeof(char) * (_len + 1));
 	if (full_error_msg == 0)

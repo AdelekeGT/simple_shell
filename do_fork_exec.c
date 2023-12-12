@@ -24,8 +24,11 @@ void do_fork_exec(char *input, char **exec_args, Shell_pack *sh_data)
 
 		if (execve_status == -1)
 		{
-			perror(sh_data->sh_argv[0]);
-			exit(EXIT_FAILURE);
+			write(STDERR_FILENO, "./hsh : 1: ", 11);
+			write(STDERR_FILENO, sh_data->sh_argv[0],
+			makeshift_strlen(sh_data->sh_argv[0]));
+			write(STDERR_FILENO, ": not found\n", 12);
+			exit(2);
 		}
 	}
 	else
