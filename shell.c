@@ -14,8 +14,11 @@ int main(int argc, char **argv)
 	(void)argc;
 
 	signal(SIGINT, do_get_sigint);
+
 	do_set_data(&sh_data, argv);
+
 	run_shell(&sh_data);
+
 	do_free_allocs(&sh_data);
 
 	if (sh_data.sh_status < 0)
