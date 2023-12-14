@@ -28,6 +28,7 @@ void do_fork_exec(char *input, char **exec_args, Shell_pack *sh_data)
 			write(STDERR_FILENO, sh_data->sh_argv[0],
 			makeshift_strlen(sh_data->sh_argv[0]));
 			write(STDERR_FILENO, ": not found\n", 12);
+			sh_data->sh_status = 127;
 			exit(2);
 		}
 	}

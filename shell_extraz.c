@@ -13,10 +13,7 @@ void do_free_allocs(Shell_pack *sh_data)
 
 	free(sh_data->sh_environ);
 
-	for (idx = 0; idx < 10 && sh_data->sh_arguments[idx] != NULL; idx++)
-		free(sh_data->sh_arguments[idx]);
 
-	free(sh_data->sh_arguments);
 
 	free(sh_data->sh_pid);
 }
