@@ -41,7 +41,6 @@ int do_prompt_exec(char *input, Shell_pack *sh_data)
 	(void)path_validation;
 	do_fork_exec(input, exec_args, sh_data);
 
-	free_args(sh_data);
 	free_prompt_exec(is_cmd, input, full_cmd);
 	return (0);
 }
