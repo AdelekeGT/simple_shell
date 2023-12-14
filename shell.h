@@ -125,5 +125,6 @@ int do_handle_errors(Shell_pack *sh_data, int return_val);
 void err_for_environ(Shell_pack *sh_data);
 void err_for_not_found(Shell_pack *sh_data);
 void err_for_exit(Shell_pack *sh_data);
+void free_args(Shell_pack *sh_data);
 
 #endif /* SHELL_H */

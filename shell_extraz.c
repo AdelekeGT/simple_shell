@@ -62,9 +62,6 @@ int do_set_data(Shell_pack *sh_data, char **argv)
 
 	sh_data->sh_environ[_i] = NULL;
 
-	_i = 0;
-	while (_i < 10)
-		sh_data->sh_arguments[_i++] = NULL;
 
 	sh_data->sh_pid = makeshift_itoa(getpid());
 

@@ -22,6 +22,7 @@ int do_prompt_exec(char *input, Shell_pack *sh_data)
 	bltin_ret_val = check_for_builtins(sh_data);
 	if (bltin_ret_val == 1 || bltin_ret_val == 0 || bltin_ret_val == -1)
 	{
+		free_args(sh_data);
 		free(input);
 		return (bltin_ret_val);
 	}
@@ -40,6 +41,7 @@ int do_prompt_exec(char *input, Shell_pack *sh_data)
 	(void)path_validation;
 	do_fork_exec(input, exec_args, sh_data);
 
+	free_args(sh_data);
 	free_prompt_exec(is_cmd, input, full_cmd);
 	return (0);
 }
@@ -76,3 +78,17 @@ void free_prompt_exec(char *is_cmd, char *input, char *full_cmd)
 	free(input);
 	free(full_cmd);
 }
+
+/**
+ * free_args - free is_cmd, input and full_cmd
+ * @sh_data: data
+*/
+void free_args(Shell_pack *sh_data)
+{
+	int i = 0;
+
+	for (i = 0; sh_data->sh_arguments[i]; i++)
+		free(sh_data->sh_arguments[i]);
+	free(sh_data->sh_arguments);
+}
+
