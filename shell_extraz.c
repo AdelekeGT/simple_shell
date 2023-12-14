@@ -39,7 +39,7 @@ int do_set_data(Shell_pack *sh_data, char **argv)
 		_i++;
 
 	sh_data->sh_environ = malloc(sizeof(char *) * (_i + 1));
-	sh_data->sh_arguments = malloc(sizeof(char *) * 10);
+	sh_data->sh_arguments = malloc(sizeof(char *) * 100000);
 
 	if (sh_data->sh_environ == NULL || sh_data->sh_arguments == NULL)
 		return (-1);
