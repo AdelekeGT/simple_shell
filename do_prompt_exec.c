@@ -38,12 +38,13 @@ int do_prompt_exec(char *input, Shell_pack *sh_data)
 
 	/*If a path e.g /bin/ls, validate the path first*/
 	path_validation = validate_path(exec_args[0]);
+	if (path_validation == 0 || is_cmd)
+		do_fork_exec(input, exec_args, sh_data);
 	if (path_validation != 0 && !is_cmd)
 	{
 		do_handle_errors(sh_data, 127);
 		return (127);
 	}
-	do_fork_exec(input, exec_args, sh_data);
 
 	free_args(sh_data);
 	free_prompt_exec(is_cmd, input, full_cmd);
