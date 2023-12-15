@@ -98,7 +98,6 @@ ssize_t do_accept_input(Shell_pack *sh_data)
 				break;
 			f++;
 		}
-
 		e = f + 1;
 
 		if (e >= l_length)
@@ -106,7 +105,6 @@ ssize_t do_accept_input(Shell_pack *sh_data)
 			e = l_length = 0;
 			sh_data->sh_cmd_type = 0;
 		}
-
 		*temp_buff = temp;
 
 		return (makeshift_strlen(temp));
