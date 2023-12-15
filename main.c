@@ -1,22 +1,21 @@
 #include "shell.h"
 
 /**
- * main - entry point
- * @ac: arg count
- * @av: arg vector
+ * main - starting point of the program
+ * @ac: number of arguments passed to ./hsh
+ * @av: argument vector
  *
- * Return: 0 on success, 1 on error
+ * Return: 0 on success of initialization
  */
 int main(int ac, char **av)
 {
-	info_t info[] = { INFO_INIT };
+	Shell_pack sh_data[] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL}};
 	(void)ac;
 
+	do_load_envs(sh_data);
 
+	run_shell(sh_data, av);
 
-
-	populate_env_list(info);
-
-	hsh(info, av);
 	return (EXIT_SUCCESS);
 }
